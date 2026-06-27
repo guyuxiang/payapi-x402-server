@@ -342,3 +342,22 @@ func USDCUnitsToUSD(units *big.Int) string {
 	q := new(big.Rat).SetFrac(units, big.NewInt(1_000_000))
 	return q.FloatString(6)
 }
+
+// PricesFor returns the USD-per-million-token prices for input, cached input, and output.
+func (t *Table) PricesFor(model string) (inputPerM, cachedInputPerM, outputPerM string) {
+	p := t.priceFor(model)
+	return microsToUSD(p.InputMicrosPerM), microsToUSD(p.CachedInputMicrosPerM), microsToUSD(p.OutputMicrosPerM)
+}
+
+func (m *Manager) PricesFor(model string) (inputPerM, cachedInputPerM, outputPerM string) {
+	m.mu.RLock()
+	table := m.table
+	m.mu.RUnlock()
+	return table.PricesFor(model)
+}
+
+// microsToUSD converts micro-USDC-per-million-tokens to a USD string.
+func microsToUSD(micros int64) string {
+	r := new(big.Rat).SetFrac(big.NewInt(micros), big.NewInt(microsPerUSD))
+	return r.FloatString(6)
+}

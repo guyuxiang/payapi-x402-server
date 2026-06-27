@@ -92,4 +92,14 @@ const (
 	HeaderResponse = "X-PAYMENT-RESPONSE"
 	HeaderCost     = "X-Cost"
 	HeaderTx       = "X-Tx"
+
+	// Token usage breakdown headers (returned on the paid response).
+	HeaderUsageInput  = "X-Usage-Input"  // uncached input tokens
+	HeaderUsageCached = "X-Usage-Cached" // cached input tokens
+	HeaderUsageOutput = "X-Usage-Output" // completion tokens
+
+	// Per-million-token prices in USD (returned on the paid response).
+	HeaderPriceInput  = "X-Price-Input"  // USD per 1M input tokens
+	HeaderPriceCached = "X-Price-Cached" // USD per 1M cached tokens
+	HeaderPriceOutput = "X-Price-Output" // USD per 1M output tokens
 )

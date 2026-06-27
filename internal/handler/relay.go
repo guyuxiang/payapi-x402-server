@@ -220,9 +220,24 @@ func (h *Relay) handlePayment(c *gin.Context, _ []byte) {
 	})
 	h.cache.Delete(reqID)
 
+	// Token usage breakdown
+	uncachedInput := cached.Usage.PromptTokens - cached.Usage.CachedTokens
+	if uncachedInput < 0 {
+		uncachedInput = 0
+	}
+
+	// Per-million-token prices for this model
+	inputPerM, cachedPerM, outputPerM := h.prices.PricesFor(cached.Model)
+
 	c.Header(types.HeaderResponse, base64.StdEncoding.EncodeToString(settlementJSON))
 	c.Header(types.HeaderCost, pricing.USDCUnitsToUSD(cached.Cost))
 	c.Header(types.HeaderTx, settlement.TxHash)
+	c.Header(types.HeaderUsageInput, fmt.Sprintf("%d", uncachedInput))
+	c.Header(types.HeaderUsageCached, fmt.Sprintf("%d", cached.Usage.CachedTokens))
+	c.Header(types.HeaderUsageOutput, fmt.Sprintf("%d", cached.Usage.CompletionTokens))
+	c.Header(types.HeaderPriceInput, inputPerM)
+	c.Header(types.HeaderPriceCached, cachedPerM)
+	c.Header(types.HeaderPriceOutput, outputPerM)
 	c.Data(cached.Status, cached.ContentType, cached.Body)
 }
 
