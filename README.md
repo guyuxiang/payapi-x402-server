@@ -1,6 +1,6 @@
-# PayAPI x402 Server
+# xPay server
 
-PayAPI x402 Server 是一个面向 AI API 的 x402 支付网关。它对外提供 OpenAI/Anthropic 兼容接口，先代理请求到上游模型服务，根据真实 token usage 计算本次调用费用，再通过 x402 exact EVM 方案收取 USDC。支付完成后，服务返回已经生成好的模型响应。
+xPay server 是一个面向 AI API 的 x402 支付网关。它对外提供 OpenAI/Anthropic 兼容接口，先代理请求到上游模型服务，根据真实 token usage 计算本次调用费用，再通过 x402 exact EVM 方案收取 USDC。支付完成后，服务返回已经生成好的模型响应。
 
 本项目适合放在 `new-api`、OpenAI 兼容网关或其他 LLM 上游服务前面，为模型调用增加按次链上支付能力。
 
@@ -78,7 +78,7 @@ cp .env.example .env
 | `SOLANA_CONFIRMATION` | Solana 否 | `confirmed` | 服务端广播交易后等待的确认级别：`confirmed` 或 `finalized` |
 | `USDC_ADDRESS` | EVM 否 / Solana 是 | `0x...` / mint pubkey | EVM USDC 合约地址；Solana 模式填写 USDC mint 地址 |
 | `RPC_URL` | 否 | `https://...` | EVM 或 Solana RPC 地址；支持链会自动使用默认 RPC |
-| `DB_PATH` | 否 | `./payapi.db` | SQLite 数据库路径 |
+| `DB_PATH` | 否 | `./xpay.db` | SQLite 数据库路径 |
 | `ADMIN_TOKEN` | 生产必填 | `change-this-admin-token` | 管理 API 鉴权 token |
 | `CACHE_TTL_SECS` | 否 | `300` | 待支付响应缓存时间 |
 | `SIG_TIMEOUT_SECS` | 否 | `120` | 返回给客户端的签名有效期 |
@@ -132,7 +132,7 @@ Authorization: Bearer your-admin-token
 ### 1. 构建镜像
 
 ```bash
-docker build -t payapi-x402-server:latest .
+docker build -t xpay-server:latest .
 ```
 
 ### 2. 准备数据目录
@@ -149,40 +149,40 @@ mkdir -p ./data
 
 ```bash
 docker run -d \
-  --name payapi-x402-server \
+  --name xpay-server \
   --restart unless-stopped \
   --env-file .env \
   -p 3402:3402 \
   -v "$(pwd)/data:/data" \
-  -e DB_PATH=/data/payapi.db \
-  payapi-x402-server:latest
+  -e DB_PATH=/data/xpay.db \
+  xpay-server:latest
 ```
 
 查看日志：
 
 ```bash
-docker logs -f payapi-x402-server
+docker logs -f xpay-server
 ```
 
 停止：
 
 ```bash
-docker stop payapi-x402-server
+docker stop xpay-server
 ```
 
 升级镜像后重启：
 
 ```bash
-docker rm -f payapi-x402-server
-docker build -t payapi-x402-server:latest .
+docker rm -f xpay-server
+docker build -t xpay-server:latest .
 docker run -d \
-  --name payapi-x402-server \
+  --name xpay-server \
   --restart unless-stopped \
   --env-file .env \
   -p 3402:3402 \
   -v "$(pwd)/data:/data" \
-  -e DB_PATH=/data/payapi.db \
-  payapi-x402-server:latest
+  -e DB_PATH=/data/xpay.db \
+  xpay-server:latest
 ```
 
 ### 4. docker compose 示例
@@ -191,17 +191,17 @@ docker run -d \
 
 ```yaml
 services:
-  payapi-x402-server:
-    image: payapi-x402-server:latest
+  xpay-server:
+    image: xpay-server:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: payapi-x402-server
+    container_name: xpay-server
     restart: unless-stopped
     env_file:
       - .env
     environment:
-      DB_PATH: /data/payapi.db
+      DB_PATH: /data/xpay.db
     ports:
       - "3402:3402"
     volumes:
@@ -333,13 +333,13 @@ POST   /admin/api/prices/reset-defaults
 默认 SQLite 文件：
 
 ```text
-./payapi.db
+./xpay.db
 ```
 
 Docker 部署建议使用：
 
 ```text
-/data/payapi.db
+/data/xpay.db
 ```
 
 主要表：
@@ -351,7 +351,7 @@ Docker 部署建议使用：
 备份：
 
 ```bash
-cp ./data/payapi.db ./data/payapi.db.bak.$(date +%Y%m%d%H%M%S)
+cp ./data/xpay.db ./data/xpay.db.bak.$(date +%Y%m%d%H%M%S)
 ```
 
 恢复时停止容器，替换数据库文件，再启动容器。
@@ -384,7 +384,7 @@ GOCACHE=/tmp/gocache go vet ./...
 构建：
 
 ```bash
-GOCACHE=/tmp/gocache go build -buildvcs=false -o bin/payapi-server ./cmd/server
+GOCACHE=/tmp/gocache go build -buildvcs=false -o bin/xpay-server ./cmd/server
 ```
 
 ## 常见问题
@@ -420,7 +420,7 @@ X-Admin-Token: your-admin-token
 说明没有持久化 SQLite 数据库。请挂载数据目录，并设置：
 
 ```bash
--v "$(pwd)/data:/data" -e DB_PATH=/data/payapi.db
+-v "$(pwd)/data:/data" -e DB_PATH=/data/xpay.db
 ```
 
 ### 5. 端口被占用

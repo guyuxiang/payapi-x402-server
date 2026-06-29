@@ -18,8 +18,8 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
-	"github.com/payapi/x402-server/internal/config"
-	"github.com/payapi/x402-server/internal/types"
+	"github.com/xpay/xpay-server/internal/config"
+	"github.com/xpay/xpay-server/internal/types"
 )
 
 const transferWithAuthorizationABI = `[{

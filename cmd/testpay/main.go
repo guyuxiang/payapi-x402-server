@@ -75,8 +75,12 @@ func main() {
 
 	domainName := req.Extra["name"]
 	domainVersion := req.Extra["version"]
-	if domainName == "" { domainName = "USDC" }
-	if domainVersion == "" { domainVersion = "2" }
+	if domainName == "" {
+		domainName = "USDC"
+	}
+	if domainVersion == "" {
+		domainVersion = "2"
+	}
 
 	sig, err := signEIP712(privKey, signer, payTo, amount, validBefore, nonce, domainName, domainVersion, chainID, usdc)
 	must(err, "sign")
@@ -139,7 +143,9 @@ func main() {
 	if resp2.StatusCode == 200 {
 		var result struct {
 			Choices []struct {
-				Message struct{ Content string `json:"content"` } `json:"message"`
+				Message struct {
+					Content string `json:"content"`
+				} `json:"message"`
 			} `json:"choices"`
 		}
 		if err := json.Unmarshal(resp2Body, &result); err == nil && len(result.Choices) > 0 {
@@ -240,7 +246,9 @@ func must(err error, msg string) {
 }
 
 func min(a, b int) int {
-	if a < b { return a }
+	if a < b {
+		return a
+	}
 	return b
 }
 

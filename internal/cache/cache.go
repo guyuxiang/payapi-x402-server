@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/payapi/x402-server/internal/pricing"
+	"github.com/xpay/xpay-server/internal/pricing"
 )
 
 // Entry is a fully-computed LLM response held until the client pays for it.

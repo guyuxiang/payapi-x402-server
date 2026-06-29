@@ -4,11 +4,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/payapi/x402-server/internal/pricing"
+	"github.com/xpay/xpay-server/internal/pricing"
 )
 
 func TestRecordEnforcesUniqueRequestID(t *testing.T) {
-	db, err := Open(filepath.Join(t.TempDir(), "payapi.db"))
+	db, err := Open(filepath.Join(t.TempDir(), "xpay.db"))
 	if err != nil {
 		t.Fatalf("Open() error = %v", err)
 	}
@@ -35,7 +35,7 @@ func TestRecordEnforcesUniqueRequestID(t *testing.T) {
 }
 
 func TestRecentByAddressDefaultLimit(t *testing.T) {
-	db, err := Open(filepath.Join(t.TempDir(), "payapi.db"))
+	db, err := Open(filepath.Join(t.TempDir(), "xpay.db"))
 	if err != nil {
 		t.Fatalf("Open() error = %v", err)
 	}
@@ -51,7 +51,7 @@ func TestRecentByAddressDefaultLimit(t *testing.T) {
 }
 
 func TestSettingsRoundTrip(t *testing.T) {
-	db, err := Open(filepath.Join(t.TempDir(), "payapi.db"))
+	db, err := Open(filepath.Join(t.TempDir(), "xpay.db"))
 	if err != nil {
 		t.Fatalf("Open() error = %v", err)
 	}
@@ -73,7 +73,7 @@ func TestSettingsRoundTrip(t *testing.T) {
 }
 
 func TestModelPricesRoundTrip(t *testing.T) {
-	db, err := Open(filepath.Join(t.TempDir(), "payapi.db"))
+	db, err := Open(filepath.Join(t.TempDir(), "xpay.db"))
 	if err != nil {
 		t.Fatalf("Open() error = %v", err)
 	}

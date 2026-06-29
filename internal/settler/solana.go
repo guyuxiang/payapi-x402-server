@@ -12,8 +12,8 @@ import (
 	"github.com/gagliardetto/solana-go/programs/memo"
 	"github.com/gagliardetto/solana-go/programs/token"
 	"github.com/gagliardetto/solana-go/rpc"
-	"github.com/payapi/x402-server/internal/config"
-	"github.com/payapi/x402-server/internal/types"
+	"github.com/xpay/xpay-server/internal/config"
+	"github.com/xpay/xpay-server/internal/types"
 )
 
 type SolanaSettler struct {

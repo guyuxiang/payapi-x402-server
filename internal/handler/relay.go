@@ -12,12 +12,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/payapi/x402-server/internal/cache"
-	"github.com/payapi/x402-server/internal/config"
-	"github.com/payapi/x402-server/internal/pricing"
-	"github.com/payapi/x402-server/internal/settler"
-	"github.com/payapi/x402-server/internal/store"
-	"github.com/payapi/x402-server/internal/types"
+	"github.com/xpay/xpay-server/internal/cache"
+	"github.com/xpay/xpay-server/internal/config"
+	"github.com/xpay/xpay-server/internal/pricing"
+	"github.com/xpay/xpay-server/internal/settler"
+	"github.com/xpay/xpay-server/internal/store"
+	"github.com/xpay/xpay-server/internal/types"
 )
 
 // Relay handles all OpenAI-compatible endpoints with x402 payment gating.
