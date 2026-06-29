@@ -3,15 +3,15 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -buildvcs=false -ldflags="-s -w" -o payapi-server ./cmd/server
+RUN CGO_ENABLED=0 GOOS=linux go build -buildvcs=false -ldflags="-s -w" -o xpay-server ./cmd/server
 
 FROM alpine:3.20
 RUN apk add --no-cache ca-certificates tzdata \
-    && addgroup -S payapi \
-    && adduser -S -G payapi payapi
+    && addgroup -S xpay \
+    && adduser -S -G xpay xpay
 WORKDIR /app
-COPY --from=builder /app/payapi-server .
-RUN chown -R payapi:payapi /app
-USER payapi
+COPY --from=builder /app/xpay-server .
+RUN chown -R xpay:xpay /app
+USER xpay
 EXPOSE 3402
-CMD ["./payapi-server"]
+CMD ["./xpay-server"]

@@ -1,4 +1,4 @@
-module github.com/payapi/x402-server
+module github.com/xpay/xpay-server
 
 go 1.24.0
 

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/payapi/x402-server/internal/pricing"
+	"github.com/xpay/xpay-server/internal/pricing"
 )
 
 func (d *DB) GetSetting(key string) (string, bool, error) {

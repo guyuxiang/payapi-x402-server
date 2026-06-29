@@ -3,7 +3,7 @@ package settler
 import (
 	"testing"
 
-	"github.com/payapi/x402-server/internal/types"
+	"github.com/xpay/xpay-server/internal/types"
 )
 
 func validAuthorizationPayload() types.AuthorizationPayload {

@@ -137,7 +137,7 @@ func Load() (*Config, error) {
 		USDCVersion:         envStr("USDC_VERSION", "2"),
 		SolanaCluster:       solanaCluster,
 		SolanaConfirmation:  envStr("SOLANA_CONFIRMATION", "confirmed"),
-		DBPath:              envStr("DB_PATH", "./payapi.db"),
+		DBPath:              envStr("DB_PATH", "./xpay.db"),
 		AdminToken:          envStr("ADMIN_TOKEN", ""),
 		CacheTTLSecs:        cacheTTL,
 		SigTimeoutSecs:      sigTimeout,

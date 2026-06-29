@@ -12,12 +12,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/payapi/x402-server/internal/cache"
-	"github.com/payapi/x402-server/internal/config"
-	"github.com/payapi/x402-server/internal/handler"
-	"github.com/payapi/x402-server/internal/pricing"
-	"github.com/payapi/x402-server/internal/settler"
-	"github.com/payapi/x402-server/internal/store"
+	"github.com/xpay/xpay-server/internal/cache"
+	"github.com/xpay/xpay-server/internal/config"
+	"github.com/xpay/xpay-server/internal/handler"
+	"github.com/xpay/xpay-server/internal/pricing"
+	"github.com/xpay/xpay-server/internal/settler"
+	"github.com/xpay/xpay-server/internal/store"
 )
 
 func main() {
@@ -103,7 +103,7 @@ func main() {
 	adminAPI.POST("/prices/reset-defaults", admin.ResetPrices)
 
 	addr := ":" + cfg.Port
-	slog.Info("payapi-x402-server starting",
+	slog.Info("xpay-server starting",
 		"addr", addr,
 		"upstream", cfg.UpstreamURL,
 		"network", cfg.Network,

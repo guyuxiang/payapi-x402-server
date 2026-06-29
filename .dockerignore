@@ -2,12 +2,12 @@
 .env
 .env.*
 !.env.example
-payapi.db
+xpay.db
 *.db
 *.db-*
 server.log
 *.log
-/payapi-server
+/xpay-server
 /testpay
 /server
 bin

@@ -7,10 +7,10 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	solanago "github.com/gagliardetto/solana-go"
 	"github.com/gin-gonic/gin"
-	"github.com/payapi/x402-server/internal/config"
-	"github.com/payapi/x402-server/internal/pricing"
-	"github.com/payapi/x402-server/internal/store"
-	"github.com/payapi/x402-server/internal/types"
+	"github.com/xpay/xpay-server/internal/config"
+	"github.com/xpay/xpay-server/internal/pricing"
+	"github.com/xpay/xpay-server/internal/store"
+	"github.com/xpay/xpay-server/internal/types"
 )
 
 // Info handles informational endpoints (no payment required).
